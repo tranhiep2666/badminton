@@ -83,4 +83,36 @@ public class GlobalExceptionHandler {
                 .badRequest()
                 .body(response);
     }
+
+    @ExceptionHandler(
+            BadRequestException.class
+    )
+    public ResponseEntity<ErrorResponse>
+    handleBadRequest(
+
+            BadRequestException ex,
+
+            HttpServletRequest request
+    ) {
+
+        ErrorResponse response =
+                ErrorResponse.builder()
+                        .timestamp(
+                                LocalDateTime.now()
+                                        .toString()
+                        )
+                        .status(400)
+                        .error("Bad Request")
+                        .message(
+                                ex.getMessage()
+                        )
+                        .path(
+                                request.getRequestURI()
+                        )
+                        .build();
+
+        return ResponseEntity
+                .badRequest()
+                .body(response);
+    }
 }

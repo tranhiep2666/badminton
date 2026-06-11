@@ -131,6 +131,62 @@ public class BookingServiceImpl implements BookingService {
                 .toList();
     }
 
+    @Override
+    public BookingResponse confirmBooking(
+            Long bookingId
+    ) {
+
+        Booking booking = bookingRepository
+                .findById(bookingId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Booking not found"
+                        ));
+
+        if (booking.getStatus() != BookingStatus.PENDING) {
+
+            throw new ConflictException(
+                    "Only pending booking can be confirmed"
+            );
+        }
+
+        booking.setStatus(
+                BookingStatus.CONFIRMED
+        );
+
+        bookingRepository.save(booking);
+
+        return mapToResponse(booking);
+    }
+
+    @Override
+    public BookingResponse cancelBooking(
+            Long bookingId
+    ) {
+
+        Booking booking = bookingRepository
+                .findById(bookingId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Booking not found"
+                        ));
+
+        if (booking.getStatus() != BookingStatus.PENDING) {
+
+            throw new ConflictException(
+                    "Only pending booking can be canceled"
+            );
+        }
+
+        booking.setStatus(
+                BookingStatus.CANCELED
+        );
+
+        bookingRepository.save(booking);
+
+        return mapToResponse(booking);
+    }
+
 
 
 
