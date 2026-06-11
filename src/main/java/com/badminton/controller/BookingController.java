@@ -19,22 +19,15 @@ public class BookingController {
     public ResponseEntity<?> createBooking(
             @Valid
             @RequestBody BookingRequest request
-    ) {
+    ){
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(
                         ResponseDTO.builder()
                                 .success(true)
-                                .message(
-                                        "Booking created successfully"
-                                )
-                                .data(
-                                        bookingService
-                                                .createBooking(
-                                                        request
-                                                )
-                                )
+                                .message("Booking created successfully")
+                                .data(bookingService.createBooking(request))
                                 .build()
                 );
     }
@@ -42,20 +35,38 @@ public class BookingController {
     @GetMapping("/history/{userId}")
     public ResponseEntity<?> getHistory(
             @PathVariable Long userId
-    ) {
+    ){
+        return ResponseEntity.ok(
+                ResponseDTO.builder()
+                        .success(true)
+                        .message("Booking history retrieved")
+                        .data(bookingService.getBookingHistory(userId))
+                        .build()
+        );
+    }
+
+    @PatchMapping("/{id}/confirm")
+    public ResponseEntity<?> confirmBooking(
+            @PathVariable Long id
+    ){
+        return ResponseEntity.ok(
+                ResponseDTO.builder()
+                        .success(true)
+                        .message("Booking confirmed successfully")
+                        .data(bookingService.confirmBooking(id)).build()
+        );
+    }
+
+    @PatchMapping("/{id}/cancel")
+    public ResponseEntity<?> cancelBooking(
+            @PathVariable Long id
+    ){
 
         return ResponseEntity.ok(
                 ResponseDTO.builder()
                         .success(true)
-                        .message(
-                                "Booking history retrieved"
-                        )
-                        .data(
-                                bookingService
-                                        .getBookingHistory(
-                                                userId
-                                        )
-                        )
+                        .message("Booking canceled successfully")
+                        .data(bookingService.cancelBooking(id))
                         .build()
         );
     }

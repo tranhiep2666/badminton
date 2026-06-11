@@ -19,29 +19,18 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getUser(
             @PathVariable Long id
-    ) {
-
-        return ResponseEntity.ok(
-                userService.getUserById(id)
-        );
+    ){
+        return ResponseEntity.ok(userService.getUserById(id));
     }
 
     @GetMapping
     public ResponseEntity<?> getUsers(
+            @RequestParam(required = false) String keyword,
 
-            @RequestParam(
-                    required = false
-            ) String keyword,
+            @RequestParam(defaultValue = "0") int page,
 
-            @RequestParam(
-                    defaultValue = "0"
-            ) int page,
-
-            @RequestParam(
-                    defaultValue = "5"
-            ) int size
-    ) {
-
+            @RequestParam(defaultValue = "5") int size
+    ){
         return ResponseEntity.ok(
                 userService.getUsers(
                         keyword,
@@ -55,11 +44,8 @@ public class UserController {
     public ResponseEntity<?> updateUser(
             @PathVariable Long id,
             @Valid @RequestBody UpdateUserRequest request
-    ) {
-
-        UserResponse response =
-                userService.updateUser(id, request);
-
+    ){
+        UserResponse response = userService.updateUser(id, request);
         return ResponseEntity.ok(
                 ResponseDTO.builder()
                         .success(true)
@@ -72,12 +58,9 @@ public class UserController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(
             @PathVariable Long id
-    ) {
-
+    ){
         userService.deleteUser(id);
-
-        return ResponseEntity.noContent()
-                .build();
+        return ResponseEntity.noContent().build();
     }
 
 }

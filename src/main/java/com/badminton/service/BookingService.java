@@ -10,4 +10,6 @@ public interface BookingService {
     List<BookingResponse> getBookingHistory(
             Long userId
     );
+    BookingResponse confirmBooking(Long bookingId);
+    BookingResponse cancelBooking(Long bookingId);
 }
