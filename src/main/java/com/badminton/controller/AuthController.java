@@ -1,8 +1,8 @@
 package com.badminton.controller;
 
 import com.badminton.dto.request.RegisterRequest;
-import com.badminton.dto.response.RegisterResponse;
 import com.badminton.dto.response.ResponseDTO;
+import com.badminton.dto.response.UserResponse;
 import com.badminton.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class AuthController {
             @Valid
             @RequestBody RegisterRequest request) {
 
-        RegisterResponse response =
+        UserResponse response =
                 userService.register(request);
 
         return ResponseEntity.status(

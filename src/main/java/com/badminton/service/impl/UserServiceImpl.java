@@ -2,7 +2,6 @@ package com.badminton.service.impl;
 
 import com.badminton.dto.request.RegisterRequest;
 import com.badminton.dto.request.UpdateUserRequest;
-import com.badminton.dto.response.RegisterResponse;
 import com.badminton.dto.response.UserResponse;
 import com.badminton.entity.User;
 import com.badminton.enums.Role;
@@ -25,7 +24,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public RegisterResponse register(RegisterRequest request) {
+    public UserResponse register(RegisterRequest request) {
 
         if (userRepository.existsByUsername(
                 request.getUsername())) {
@@ -55,11 +54,16 @@ public class UserServiceImpl implements UserService {
 
         userRepository.save(user);
 
-        return RegisterResponse.builder()
+        return UserResponse.builder()
                 .id(user.getId())
                 .username(user.getUsername())
+                .fullName(user.getFullName())
                 .email(user.getEmail())
+                .phoneNumber(user.getPhoneNumber())
+                .role(user.getRole())
+                .enabled(user.getEnabled())
                 .build();
+
     }
 
     @Override

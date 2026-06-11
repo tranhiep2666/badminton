@@ -2,13 +2,12 @@ package com.badminton.service;
 
 import com.badminton.dto.request.RegisterRequest;
 import com.badminton.dto.request.UpdateUserRequest;
-import com.badminton.dto.response.RegisterResponse;
 import com.badminton.dto.response.UserResponse;
 import org.springframework.data.domain.Page;
 
 public interface UserService {
 
-    RegisterResponse register(RegisterRequest request);
+    UserResponse register(RegisterRequest request);
 
     UserResponse getUserById(Long id);
 

@@ -28,27 +28,12 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<?> getUsers(
-
-            @RequestParam(
-                    required = false
-            ) String keyword,
-
-            @RequestParam(
-                    defaultValue = "0"
-            ) int page,
-
-            @RequestParam(
-                    defaultValue = "5"
-            ) int size
+            @RequestParam(required = false) String keyword,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size
     ) {
 
-        return ResponseEntity.ok(
-                userService.getUsers(
-                        keyword,
-                        page,
-                        size
-                )
-        );
+        return ResponseEntity.ok(userService.getUsers(keyword, page, size));
     }
 
     @PutMapping("/{id}")
@@ -57,8 +42,7 @@ public class UserController {
             @Valid @RequestBody UpdateUserRequest request
     ) {
 
-        UserResponse response =
-                userService.updateUser(id, request);
+        UserResponse response = userService.updateUser(id, request);
 
         return ResponseEntity.ok(
                 ResponseDTO.builder()
