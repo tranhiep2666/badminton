@@ -1,9 +1,6 @@
 package com.badminton.controller;
 
-import com.badminton.dto.request.ChangePasswordRequest;
-import com.badminton.dto.request.LoginRequest;
-import com.badminton.dto.request.RefreshTokenRequest;
-import com.badminton.dto.request.RegisterRequest;
+import com.badminton.dto.request.*;
 import com.badminton.dto.response.ResponseDTO;
 import com.badminton.dto.response.UserResponse;
 import com.badminton.service.AuthService;
@@ -149,6 +146,71 @@ public class AuthController {
 
                         .data(null)
 
+                        .build()
+        );
+    }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(
+
+            @Valid
+            @RequestBody
+            ForgotPasswordRequest request
+    ) {
+
+        authService.forgotPassword(
+                request
+        );
+
+        return ResponseEntity.ok(
+                ResponseDTO.builder()
+                        .success(true)
+                        .message("OTP sent successfully")
+                        .data(null)
+                        .build()
+        );
+    }
+
+    @PostMapping("/verify-otp")
+    public ResponseEntity<?> verifyOtp(
+
+            @Valid
+            @RequestBody
+            VerifyOtpRequest request
+    ) {
+
+        authService.verifyOtp(
+                request
+        );
+
+        return ResponseEntity.ok(
+                ResponseDTO.builder()
+                        .success(true)
+                        .message("OTP verified")
+                        .data(null)
+                        .build()
+        );
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(
+
+            @Valid
+            @RequestBody
+            ResetPasswordRequest request
+    ) {
+
+        authService.resetPassword(
+                request
+        );
+
+        return ResponseEntity.ok(
+                ResponseDTO.builder()
+                        .success(true)
+                        .message(
+                                "Password reset successfully"
+                        )
+                        .data(null)
                         .build()
         );
     }

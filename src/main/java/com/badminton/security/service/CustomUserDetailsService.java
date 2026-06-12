@@ -14,12 +14,9 @@ public class CustomUserDetailsService
     private final UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(
-            String username
-    ) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        User user =
-                userRepository
+        User user = userRepository
                         .findByUsername(username)
                         .orElseThrow(() ->
                                 new UsernameNotFoundException(
@@ -30,9 +27,7 @@ public class CustomUserDetailsService
                 .builder()
                 .username(user.getUsername())
                 .password(user.getPassword())
-                .authorities(
-                        user.getRole().name()
-                )
+                .authorities(user.getRole().name())
                 .disabled(!user.getEnabled())
                 .build();
     }

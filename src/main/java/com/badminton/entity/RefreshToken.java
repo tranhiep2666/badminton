@@ -15,9 +15,7 @@ import java.time.LocalDateTime;
 public class RefreshToken {
 
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.IDENTITY
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(
@@ -27,14 +25,10 @@ public class RefreshToken {
     )
     private String token;
 
-    @Column(
-            nullable = false
-    )
+    @Column(nullable = false)
     private LocalDateTime expiryDate;
 
     @ManyToOne
-    @JoinColumn(
-            name = "user_id"
-    )
+    @JoinColumn(name = "user_id")
     private User user;
 }

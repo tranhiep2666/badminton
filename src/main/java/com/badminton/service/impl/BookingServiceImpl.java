@@ -24,36 +24,25 @@ public class BookingServiceImpl implements BookingService {
     private final CourtRepository courtRepository;
 
     @Override
-    public BookingResponse createBooking(
-            BookingRequest request
-    ) {
+    public BookingResponse createBooking(BookingRequest request){
 
         User customer = userRepository
                 .findById(request.getCustomerId())
                 .orElseThrow(() ->
-                        new ResourceNotFoundException(
-                                "Customer not found"
-                        ));
+                        new ResourceNotFoundException("Customer not found"));
 
         Court court = courtRepository
                 .findById(request.getCourtId())
                 .orElseThrow(() ->
-                        new ResourceNotFoundException(
-                                "Court not found"
-                        ));
-        boolean existed =
-                bookingRepository
+                        new ResourceNotFoundException("Court not found"));
+        boolean existed = bookingRepository
                         .existsByCourtIdAndBookingDateAndStatusIn(
                                 request.getCourtId(),
                                 request.getBookingDate(),
-                                List.of(
-                                        BookingStatus.PENDING,
-                                        BookingStatus.CONFIRMED
-                                )
+                                List.of(BookingStatus.PENDING, BookingStatus.CONFIRMED)
                         );
 
         if(existed){
-
             throw new ConflictException(
                     "Court already booked"
             );
@@ -63,12 +52,8 @@ public class BookingServiceImpl implements BookingService {
                 Booking.builder()
                         .customer(customer)
                         .court(court)
-                        .bookingDate(
-                                request.getBookingDate()
-                        )
-                        .startTime(
-                                request.getStartTime()
-                        )
+                        .bookingDate(request.getBookingDate())
+                        .startTime(request.getStartTime())
                         .endTime(
                                 request.getEndTime()
                         )

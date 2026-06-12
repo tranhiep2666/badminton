@@ -15,9 +15,7 @@ import java.time.LocalDateTime;
 public class TokenBlacklist {
 
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.IDENTITY
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(
@@ -27,8 +25,6 @@ public class TokenBlacklist {
     )
     private String token;
 
-    @Column(
-            nullable = false
-    )
+    @Column(nullable = false)
     private LocalDateTime expiryDate;
 }

@@ -15,4 +15,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
             String keyword,
             Pageable pageable
     );
+    Optional<User> findByEmail(
+            String email
+    );
 }

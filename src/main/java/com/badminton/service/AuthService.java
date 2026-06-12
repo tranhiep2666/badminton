@@ -1,8 +1,6 @@
 package com.badminton.service;
 
-import com.badminton.dto.request.ChangePasswordRequest;
-import com.badminton.dto.request.LoginRequest;
-import com.badminton.dto.request.RefreshTokenRequest;
+import com.badminton.dto.request.*;
 import com.badminton.dto.response.LoginResponse;
 import com.badminton.dto.response.RefreshTokenResponse;
 
@@ -19,5 +17,16 @@ public interface AuthService {
     void changePassword(
             String username,
             ChangePasswordRequest request
+    );
+    void forgotPassword(
+            ForgotPasswordRequest request
+    );
+
+    void verifyOtp(
+            VerifyOtpRequest request
+    );
+
+    void resetPassword(
+            ResetPasswordRequest request
     );
 }
