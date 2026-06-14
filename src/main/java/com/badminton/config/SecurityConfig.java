@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
@@ -82,8 +83,39 @@ public class SecurityConfig {
                         UsernamePasswordAuthenticationFilter.class
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/**")
-                        .permitAll()
+
+                        // PUBLIC
+                        .requestMatchers(
+                                "/api/v1/auth/**"
+                        ).permitAll()
+
+                        // ADMIN
+                        .requestMatchers(
+                                "/api/v1/users/**"
+                        ).hasRole("ADMIN")
+
+                        .requestMatchers(
+                                HttpMethod.PATCH,
+                                "/api/v1/bookings/*/confirm",
+                                "/api/v1/bookings/*/cancel"
+                        ).hasRole("ADMIN")
+
+                        // CUSTOMER
+                        .requestMatchers(
+                                HttpMethod.POST,
+                                "/api/v1/bookings"
+                        ).hasRole("CUSTOMER")
+
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/api/v1/bookings/history/**"
+                        ).hasRole("CUSTOMER")
+
+                        // LOGIN REQUIRED
+                        .requestMatchers(
+                                "/api/v1/files/**"
+                        ).authenticated()
+
                         .anyRequest()
                         .authenticated()
                 );
